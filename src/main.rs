@@ -1,3 +1,5 @@
+use std::ffi::OsString;
+
 use clap::{Args, Parser, Subcommand};
 
 #[derive(Parser)]
@@ -24,8 +26,11 @@ struct MasterArgs {
 
 #[derive(Debug, Subcommand)]
 enum MasterCommands {
-    /// Creates a master key
-    Create,
+    /// Generates a master key
+    Generate {
+        #[arg(long, value_name = "TOML", required = true)]
+        path: OsString,
+    },
     /// Extracts a master key from a backup
     Extract,
     /// Creates a backup of a master key
@@ -40,8 +45,8 @@ struct SubkeyArgs {
 
 #[derive(Debug, Subcommand)]
 enum SubkeyCommands {
-    /// Creates a sub key
-    Create,
+    /// Generates a sub key
+    Generate,
     /// Revokes a sub key
     Revoke,
 }
@@ -53,7 +58,8 @@ fn main() {
         Commands::Master(master) => {
             let master_cmd = &master.command;
             match master_cmd {
-                MasterCommands::Create => {
+                MasterCommands::Generate { path } => {
+                    secretcfg::generate(path.clone());
                     println!("Master created!")
                 }
                 MasterCommands::Extract => {
@@ -68,7 +74,7 @@ fn main() {
         Commands::Subkey(subkey) => {
             let subkey_cmd = &subkey.command;
             match subkey_cmd {
-                SubkeyCommands::Create => {
+                SubkeyCommands::Generate => {
                     println!("Sub key created!");
                 }
                 SubkeyCommands::Revoke => {

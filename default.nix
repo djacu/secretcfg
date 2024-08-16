@@ -1,4 +1,8 @@
-{ lib, rustPlatform }:
+{
+  lib,
+  rustPlatform,
+  sequoia-sq,
+}:
 
 rustPlatform.buildRustPackage {
 
@@ -15,5 +19,7 @@ rustPlatform.buildRustPackage {
   };
 
   cargoLock.lockFile = ./Cargo.lock;
+
+  nativeBuildInputs = [ sequoia-sq ];
 
 }
