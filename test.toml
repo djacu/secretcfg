@@ -1,0 +1,14 @@
+[master]
+# cipher_suite = "Cv25519"
+# authenticate = false
+# sign = true
+# expiry = "4y"
+
+# [master.encrypt]
+# can = true
+# purpose = "universal"
+
+[[master.userids]]
+name = "Don Ding3r"
+# comment = "dongers"
+email = "don@dingers.dom"

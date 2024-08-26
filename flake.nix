@@ -20,6 +20,7 @@
       in
       {
         packages.default = secretcfg;
+        devShells.test = pkgs.callPackage ./sqtest { };
       }
     );
 }
