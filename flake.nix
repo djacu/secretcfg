@@ -16,10 +16,18 @@
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        secretcfg = pkgs.callPackage ./. { };
+        inherit (pkgs) lib;
       in
       {
-        packages.default = secretcfg;
+        packages = builtins.removeAttrs (pkgs.callPackage ./packages { }) [
+          "callPackage"
+          "newScope"
+          "override"
+          "overrideDerivation"
+          "overrideScope"
+          "overrideScope'"
+          "packages"
+        ];
       }
     );
 }
